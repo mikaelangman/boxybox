@@ -8,4 +8,6 @@
     #define ACT_INC_VOL 6
     #define ACT_DEC_VOL 7
     #define ACT_STOP_POT 8
+    #define ACT_UPDATE_DISPLAY 9
+    #define ACT_MUTE 10
 #endif

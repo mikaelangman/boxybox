@@ -3,6 +3,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <U8g2lib.h>
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -15,6 +16,17 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 #define LOGO16_GLCD_HEIGHT 16
 #define LOGO16_GLCD_WIDTH  16
+
+
+
+void update_display(uint8_t volume, uint8_t input){
+
+
+
+  return;
+}
+
+
 static const unsigned char PROGMEM logo16_glcd_bmp[] =
 { B00000000, B11000000,
   B00000001, B11000000,

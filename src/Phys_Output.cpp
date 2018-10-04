@@ -7,8 +7,13 @@
 #define MOTOR_PIN_PWM 10
 #define PWM_DUTY_CYCLE 255
 #define TURNING_TIME 200
+#define POWER_LED_PIN 4
 
 int turning_pot = 0;
+
+void set_power_led(uint8_t state){
+    digitalWrite(POWER_LED_PIN, state);
+}
 
 void turn_pot(bool positive_direction){
 
@@ -34,8 +39,8 @@ void setup_phys_output(){
     pinMode(MOTOR_PIN_PWM, OUTPUT);
     pinMode(MOTOR_PIN_NEG, OUTPUT);
     pinMode(MOTOR_PIN_POS, OUTPUT);
-
-
+    pinMode(POWER_LED_PIN, OUTPUT);
+    set_power_led(HIGH);
 
     Serial.write("Setup phys output done.");
 

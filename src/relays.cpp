@@ -11,6 +11,10 @@
 const uint8_t pins[4] = {REL_0_PIN, REL_1_PIN, REL_2_PIN ,REL_3_PIN};
 uint8_t current_input = 0;
 
+uint8_t get_current_input(){
+  return current_input;
+}
+
 void turn_relay_off(uint8_t rel){
 
       digitalWrite(pins[rel], LOW);
@@ -37,12 +41,25 @@ void advance_input(){
   turn_relay_off(current_input);
   current_input = (current_input + 1) % (NUM_INPUTS - 1);
   turn_relay_on(current_input);
+
+}
+
+void set_input(uint8_t input){
+
+  if(current_input == input){
+    return;
+  }
+
+  turn_relay_off(current_input);
+  turn_relay_on(input);
+  current_input = input;
 }
 
 void setup_relays(){
 
   Serial.write("Setup relays...");
 
+  current_input = 0;
 
   for(uint8_t i = 0; i < sizeof(pins); i++){
     pinMode(pins[i], OUTPUT);

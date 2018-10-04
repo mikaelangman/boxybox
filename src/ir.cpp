@@ -2,11 +2,17 @@
 #include <IRremote.h>
 #include <stdint.h>
 #include "Actions.h"
+#include "IRCodes.h"
 
 const uint8_t RECV_PIN = 5;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
-decode_type_t ir_type = UNKNOWN;
+uint8_t wanted_input = 0;
+uint8_t last_ir_action;
+
+uint8_t get_wanted_input(){
+  return wanted_input;
+}
 
 void setup_ir(){
 
@@ -18,16 +24,78 @@ void setup_ir(){
 
 }
 
-uint8_t handle_ir(decode_results results){
+uint8_t ir2action(unsigned long ircode){
 
-  Serial.println(results.value, HEX);
+  uint8_t ret = ACT_NOOP;
 
-  if (results.decode_type != ir_type){
-    ir_type = results.decode_type;
+  switch(ircode){
+
+    case IR_ON: //On
+      ret = ACT_TURN_ON;
+      break;
+    case IR_OFF: //Off
+      ret = ACT_TURN_OFF;
+      break;
+    case IR_MUTE: //Mute
+      ret = ACT_MUTE;
+      break;
+    case IR_VOL_UP: //Vol up
+      ret = ACT_INC_VOL;
+      break;
+    case IR_VOL_DOWN: //Vol down
+      ret = ACT_DEC_VOL;
+      break;
+    case IR_DISC: //Disc
+      wanted_input = 0;
+      ret = ACT_SET_INPUT;
+      break;
+    case IR_CD: //CD
+      wanted_input = 1;
+      ret = ACT_SET_INPUT;
+      break;
+    case IR_VIDEO: //Video
+      wanted_input = 2;
+      ret = ACT_SET_INPUT;
+      break;
+    case IR_AUX: //AUX
+      wanted_input = 3;
+      ret = ACT_SET_INPUT;
+      break;
+    case IR_TUNER: //Tuner
+      break;
+    case IR_TAPE: //Tape
+      break;
+    case IR_STOP: //Stop
+      break;
+    case IR_PAUSE: //Pause
+      break;
+    case IR_PLAY: //Play
+      break;
+    case IR_EJECT: //Eject
+      break;
+    case IR_REWIND: //Rewind
+      break;
+    case IR_FORWARD: //Forward
+      break;
+
+    case IR_REPEAT: //Repeated command
+      ret = last_ir_action;   
+      break;
+    default:
+      break;
   }
 
+  if(ircode != IR_REPEAT){
+    last_ir_action = ret;
+  } 
 
-  return ACT_NOOP;
+  return ret;
+}
+
+uint8_t handle_ir(decode_results results){
+
+  //Serial.println(results.value, HEX);
+  return ir2action(results.value);
 
 }
 

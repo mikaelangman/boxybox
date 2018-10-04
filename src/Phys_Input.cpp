@@ -9,6 +9,7 @@
 #define VOL_SENSOR_MIN 1023
 
 
+
 uint8_t get_current_volume(){
 
     return map(analogRead(VOL_PIN), VOL_SENSOR_MIN, VOL_SENSOR_MAX, 0, 100);
