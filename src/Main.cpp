@@ -26,7 +26,7 @@ void start_box(){
     return;
   }
 
-  setup();  
+  setup();
 
 }
 
@@ -50,7 +50,7 @@ void perform_actions(uint8_t actions[]){
     }
 
     switch(actions[i]){
-      case ACT_NOOP: 
+      case ACT_NOOP:
         break;
 
       case ACT_TURN_OFF:
@@ -104,13 +104,13 @@ void setup(){
   setup_relays();
   setup_phys_input();
   setup_phys_output();
-  //setup_display();
+  setup_display();
 
   Serial.write("Setup done.");
 
   system_state = STATE_ON;
 
-  
+
 
 }
 
@@ -124,8 +124,8 @@ void loop(){
   if (system_state == STATE_ON){
     actions[1] = loop_relays(system_state);
     actions[3] = loop_phys_output(system_state);
-    //actions[4] = loop_display(system_state);
-  } 
+    actions[4] = loop_display(system_state);
+  }
 
   perform_actions(actions);
 

@@ -4,6 +4,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <U8g2lib.h>
+#include "Actions.h"
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -367,6 +368,7 @@ void setup_display(){
   testdrawbitmap(logo16_glcd_bmp, LOGO16_GLCD_HEIGHT, LOGO16_GLCD_WIDTH);
 }
 
-void loop_display(){
+uint8_t loop_display(uint8_t system_state){
 
+  return ACT_NOOP;
 }
